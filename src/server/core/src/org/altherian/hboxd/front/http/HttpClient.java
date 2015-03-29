@@ -28,6 +28,8 @@ import org.altherian.hbox.comm.out.event.EventOut;
 
 public class HttpClient implements _Client {
 
+   Jetty httpserver = new Jetty();
+
    public HttpClient(String id, String address) {
 
    }

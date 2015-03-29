@@ -36,22 +36,17 @@ public class HttpServerFront implements _Front {
    private _RequestReceiver reqRecv;
    private Map<String, _Client> clients = new HashMap<String, _Client>();
 
+   Jetty httpserver = new Jetty();
+
    @Override
    public void start(_RequestReceiver receiver) throws HyperboxException {
-      // stub for now
+      httpserver.start();
    }
 
-   public void startTemp(_RequestReceiver receiver) throws HyperboxException {
-      reqRecv = receiver;
-      // start socket on ort 80/443
-      // listen to new connections
-   }
 
    @Override
    public void stop() {
-      // TODO Auto-generated method stub
-      // stop listening
-      // close socket
+      httpserver.stop();
    }
 
    @Override
