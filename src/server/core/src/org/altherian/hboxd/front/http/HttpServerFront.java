@@ -23,7 +23,6 @@ package org.altherian.hboxd.front.http;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.altherian.hbox.comm.Request;
 import org.altherian.hbox.comm._Client;
 import org.altherian.hbox.comm.out.event.EventOut;
 import org.altherian.hbox.exception.HyperboxException;
@@ -33,7 +32,7 @@ import org.altherian.hboxd.front._RequestReceiver;
 
 public class HttpServerFront implements _Front {
 
-   private _RequestReceiver reqRecv;
+
    private Map<String, _Client> clients = new HashMap<String, _Client>();
 
    Jetty httpserver = new Jetty();
@@ -56,20 +55,5 @@ public class HttpServerFront implements _Front {
       }
    }
 
-   private void newConnectionEvent(String clientIp, String browerId) {
-      _Client httpClient = new HttpClient(clientIp, browerId);
-      reqRecv.register(httpClient);
-      clients.put(clientIp, httpClient);
-   }
-
-   private void newRequestReceived(String clientIp, String raw) {
-      // parse request to extract Request object and all that is included into it
-      Request req = RequestBuilder.extract(raw); //whatever can translate the raw text
-      reqRecv.postRequest(clients.get(clientIp), req);
-   }
-
-   private void disconnectClientEvent(String clientIp) {
-      reqRecv.unregister(clients.get(clientIp));
-   }
 
 }

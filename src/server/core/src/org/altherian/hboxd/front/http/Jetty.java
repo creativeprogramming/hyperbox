@@ -24,7 +24,11 @@ package org.altherian.hboxd.front.http;
 import org.altherian.hboxd.HBoxServer;
 import org.altherian.tool.logging.Logger;
 import org.eclipse.jetty.annotations.AnnotationParser.AbstractHandler;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class Jetty extends AbstractHandler {
@@ -48,7 +52,18 @@ public class Jetty extends AbstractHandler {
          context.setContextPath("/");
          context.setParentLoaderPriority(true);
 
-         _server.setHandler(context);
+         ContextHandler context0 = new ContextHandler();
+         context0.setContextPath("/update");
+         Handler handler0 = new UpdateHandler();
+         context0.setHandler(handler0);
+
+         ContextHandlerCollection contexts = new ContextHandlerCollection();
+         contexts.setHandlers(new Handler[] { context0, context });
+
+         HandlerCollection handlers = new HandlerCollection();
+         handlers.setHandlers(new Handler[] { context0, context });
+
+         _server.setHandler(handlers);
          _server.start();
 
          //     Server/src/org/altherian/hboxd/front/http/context/
